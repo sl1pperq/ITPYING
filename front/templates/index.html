@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ItPying - Образовательная платформа</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            new WOW().init();
+        });
+    </script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            text-align: center;
+        }
+        .hero {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background: linear-gradient(to right, #4b6cb7, rgb(157, 195, 215));
+            color: white;
+        }
+        .hero img {
+            width: 150px;
+            animation: bounce 2s infinite;
+        }
+        .info-section {
+            padding: 50px 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="hero">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Python Logo" class="wow animate__animated animate__bounce">
+    <h1 class="wow animate__animated animate__fadeInDown">Добро пожаловать в ITPYING</h1>
+    <p class="wow animate__animated animate__fadeInUp">Образовательная платформа для изучения Python и технического английского</p>
+    <a data-bs-toggle="modal" data-bs-target="#loginModal" class="btn btn-light mt-3 wow animate__animated animate__zoomIn".size(height=200, width=250)>Войти</a>
+
+</div>
+
+<section id="info" class="info-section container">
+    <h2 class="wow animate__animated animate__fadeInUp">О платформе ITPYING</h2>
+    <p class="wow animate__animated animate__fadeInUp" data-wow-delay="0.3s">
+        ItPying создан для школьников и студентов, желающих изучить Python с нуля. Мы работаем в ведущих школах страны,
+        предоставляя интерактивные курсы и практические задания.
+    </p>
+    <h3 class="mt-4 wow animate__animated animate__fadeInUp">Школы, участвующие в программе:</h3>
+    <ul class="list-group list-group-flush wow animate__animated animate__fadeInUp" data-wow-delay="0.5s">
+        <li class="list-group-item">Школа №1561</li>
+        <li class="list-group-item">IT-класс Московской Школы</li>
+    </ul>
+</section>
+
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Войти в аккаунт</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="/form_login">
+                    <div class="mb-3">
+                        <label class="form-label">Почта</label>
+                        <input name="email" type="email" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Пароль</label>
+                        <input name="password" type="password" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Войти</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Регистрация</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Почта</label>
+                        <input type="email" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Пароль</label>
+                        <input type="password" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Фамилия, имя</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Создать аккаунт</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

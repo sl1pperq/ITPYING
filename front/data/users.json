@@ -1,0 +1,44 @@
+[
+  {
+    "name": "���� ������",
+    "email": "ivan@ivanov.ru",
+    "password": "123",
+    "role": "������",
+    "class": "10�",
+    "rating": 5,
+    "stars": 11,
+    "solved": [],
+    "teacher": "���������� �.�"
+  },
+  {
+    "name": "����",
+    "email": "oleg@mail.ru",
+    "class": "7�",
+    "password": "321",
+    "role": "������",
+    "rating": 4,
+    "stars": 3,
+    "solved": [],
+    "teacher": "���������� �.�"
+  },
+  {
+    "name": "���������� �.�",
+    "email": "m@eu.ru",
+    "password": "12345",
+    "role": "�������",
+    "solved": [],
+    "rating": 4,
+    "stars": 3
+  },
+  {
+    "name": "��������� ������� ",
+    "email": "k@m.ru",
+    "class": "7�",
+    "password": "123",
+    "role": "������",
+    "rating": 0,
+    "stars": 0,
+    "solved": [],
+    "teacher": "���������� �.�"
+  }
+]
