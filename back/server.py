@@ -5,11 +5,7 @@ app = Flask(__name__)
 
 @app.route('/api/v1/auth', methods=['POST'])
 def post_auth():
-    res = auth(request.json)
-    if 'message' in res:
-        return jsonify(res), 400
-    return jsonify(res), 200
-
+    return auth(request.json)
 @app.route('/api/v1/info/add_student', methods=['POST'])
 def post_add_student():
     return add_user(request.json)
