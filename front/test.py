@@ -46,8 +46,13 @@ def teacher_email():
 @app.route('/student')
 def student():
     auth = session['student']
+    data = {"class": auth["class"], "teacher": "Моргуненко ЕЮ"}
+    req = requests.post('http://127.0.0.1:5000/api/v1/info/class_stars', json=data)
+    if req.status_code == 200:
+        pass
     user = ''
-    return render_template('student_cabinet.html', user=auth, users=users)
+    return render_template('student_cabinet.html', user=auth, users=req)
+
 
 # Страница учителя
 @app.route('/teacher')
