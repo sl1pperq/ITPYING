@@ -101,27 +101,19 @@ def post_add_student():
     clas = request.form['class']
     email = request.form['email']
     password = request.form['password']
-    users.append({
-        "name": name,
-        "email": email,
-        'class': clas,
-        "password": password,
-        "role": 'Ученик',
-        'rating': 0,
-        'stars': 0,
-        'solved': [],
-        'teacher': 'Моргуненко Е.Ю'
-    })
-    save_data()
+    data = {"name": name, "email": email, "password": password, "role": "Ученик", "class":clas, "stars": 0, "raiting": 0, "teacher": "Моргуненко ЕЮ"}
+    req = requests.post('http://127.0.0.1:5000/api/v1/info/add_student', json=data)
+    if req.status_code == 200:
+        pass
     return redirect('/teacher')
 
 @app.route('/del_student', methods=['POST'])
 def post_del_student():
-    name = request.form['name']
-    for i in range(len(users)):
-        if users[i]['name'] == name:
-            del users[i]
-    save_data()
+    email = request.form['email']
+    data = {"email": email }
+    req = requests.delete('http://127.0.0.1:5000/api/v1/info/del_student', json=data)
+    if req.status_code == 200:
+        pass
     return redirect('/teacher')
 
 # Ответ на вопрос урока
@@ -189,11 +181,10 @@ def open_code(id, step):
                             description = 'Частично пройдено. Результат не засчитан.'
                         elif counter == len(i_data):
                             description = 'Пройдено.'
-                            for u in users:
-                                if u['name'] == auth['name']:
-                                    u['stars'] += 1
-                                    save_data()
-                                    break
+                            data = {"user": auth, "id": id, "step": step, "code": answer, "input": i_data, "output": o_data}
+                            req = requests.post('http://127.0.0.1:5000/api/v1/task/code_task', json=data)
+                            if req.status_code == 200:
+                                pass
                     text_q = []
                     quest_q = []
                     code_q = []
