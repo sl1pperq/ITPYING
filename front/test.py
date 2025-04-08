@@ -19,7 +19,7 @@ def check_login_form():
     email = request.form.get('email')
     password = request.form.get('password')
     data = {"email": email, "password": password}
-    req = requests.post('http://127.0.0.1:5000/api/v1/auth', json=data)
+    req = requests.post('http://127.0.0.1:5001/api/v1/auth', json=data)
     print(req.json())
     u = req.json()
     u['email'] = email
@@ -131,33 +131,15 @@ def open_answer(id, step):
     step = int(step)
     auth = session['student']
     answer = request.form['answer']
-    if answer == 'True':
-        for u in users:
-            if u['name'] == auth['name']:
-                u['stars'] += 1
-                save_data()
-                break
     if auth == None:
         return redirect('/')
-    for l in lessons:
-        if l['number'] == id:
-            text_q = []
-            quest_q = []
-            code_q = []
-            for j in l['lessons']:
-                if j['type'] == 'text':
-                    text_q.append(j)
-                if j['type'] == 'question':
-                    quest_q.append(j)
-                if j['type'] == 'code':
-                    code_q.append(j)
-            # TODO: засчитывание звездочек
-            # data = {"email": email, "password": password}
-            # req = requests.post('http://127.0.0.1:5000/api/v1/task/done_task', json=data)
-            # print(req.json())
-            # u = req.json()
-            return render_template('lesson.html', user=auth, l=l, step=step, is_true=answer, text=text_q, quest=quest_q, code_q=code_q)
-    return redirect('/student_education')
+    if answer == 'True':
+        data = {"user": auth, "id": id, "step": step, "answer": answer}
+        req = requests.post('http://127.0.0.1:5000/api/v1/task/done_task', json=data)
+        if req.status_code == 200:
+            pass
+    l, text_q, quest_q, code_q = get_lessons(id)
+    return render_template('lesson.html', user=auth, l=l, step=step, is_true=answer, text=text_q, quest=quest_q, code_q=code_q)
 
 # Ответ на вопрос урока (код)
 @app.route('/code/<id>/<step>', methods=['POST'])
@@ -222,11 +204,24 @@ def open_code(id, step):
                             quest_q.append(j)
                         if j['type'] == 'code':
                             code_q.append(j)
-                    print(i_data)
                     return render_template('lesson.html', user=auth, l=l, step=step, counter=counter, kolvo=kolvo, text=text_q, quest=quest_q, code_q=code_q, d=description, code=answer, user_output=user_output)
     return redirect('/student_education')
+
+def get_lessons(id):
+    for l in lessons:
+        if l['number'] == id:
+            text_q = []
+            quest_q = []
+            code_q = []
+            for j in l['lessons']:
+                if j['type'] == 'text':
+                    text_q.append(j)
+                if j['type'] == 'question':
+                    quest_q.append(j)
+                if j['type'] == 'code':
+                    code_q.append(j)
+            return l, text_q, quest_q, code_q
 
 
 if __name__ == '__main__':
     app.run(port=5002, debug=True)
-    #TODO: Port 5000
