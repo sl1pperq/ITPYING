@@ -19,7 +19,7 @@ def check_login_form():
     email = request.form.get('email')
     password = request.form.get('password')
     data = {"email": email, "password": password}
-    req = requests.post('http://127.0.0.1:5001/api/v1/auth', json=data)
+    req = requests.post('http://127.0.0.1:5000/api/v1/auth', json=data)
     print(req.json())
     u = req.json()
     u['email'] = email
