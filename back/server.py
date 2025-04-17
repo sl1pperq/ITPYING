@@ -11,9 +11,9 @@ def post_add_student():
     return add_user(request.json)
 
 
-@app.route('/api/v1/info/class_stars', methods=['POST'])
-def post_class_stars():
-    return check_stars_class(request.json)
+@app.route('/api/v1/info/class_raiting', methods=['POST'])
+def post_class_raiting():
+    return check_raiting_class(request.json)
 
 
 @app.route('/api/v1/info/users_tasks', methods=['POST'])
@@ -23,7 +23,7 @@ def post_users_tasks():
 
 @app.route('/api/v1/task/code_task', methods=['POST'])
 def post_code_task():
-    return code_task(request.json)
+    return run_task(request.json)
 
 
 @app.route('/api/v1/task/done_task', methods=['POST'])
@@ -34,5 +34,9 @@ def post_done_task():
 @app.route('/api/v1/task/test_info', methods=['POST'])
 def post_test_info():
     return check_test(request.json)
+
+@app.route('/api/v1/task/delete_user', methods=['POST'])
+def post_delete_user():
+    return delete_user(request.json)
 
 app.run()
