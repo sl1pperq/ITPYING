@@ -47,11 +47,12 @@ def teacher_email():
 def student():
     auth = session['student']
     data = {"class": auth["class"], "teacher": "Моргуненко ЕЮ"}
-    req = requests.post('http://127.0.0.1:5000/api/v1/info/class_stars', json=data)
+    req = requests.post('http://127.0.0.1:5000/api/v1/info/class_raiting', json=data)
+    print(req.json())
     if req.status_code == 200:
         pass
     user = ''
-    return render_template('student_cabinet.html', user=auth, users=req)
+    return render_template('student_cabinet.html', user=auth, users=req.json())
 
 
 # Страница учителя
@@ -59,7 +60,13 @@ def student():
 def teacher():
     auth = session['teacher']
     filter = request.args.get('filter')
-    return render_template('teacher_cabinet.html', user=auth, users=users, filter=filter)
+    if filter is None:
+        filter = '11Т'
+    data = {"class": filter, "teacher": "Моргуненко ЕЮ"}
+    req = requests.post('http://127.0.0.1:5000/api/v1/info/class_raiting', json=data)
+    req = req.json()
+    print(req)
+    return render_template('teacher_cabinet.html', user=auth, users=req, filter=filter)
 
 # Список уроков для ученика
 @app.route('/student_education')
@@ -115,8 +122,9 @@ def post_add_student():
 @app.route('/del_student', methods=['POST'])
 def post_del_student():
     email = request.form['email']
-    data = {"email": email }
-    req = requests.delete('http://127.0.0.1:5000/api/v1/info/del_student', json=data)
+    data = {"email": email}
+    print(data)
+    req = requests.post('http://127.0.0.1:5000/api/v1/user/delete_user', json=data)
     if req.status_code == 200:
         pass
     return redirect('/teacher')
@@ -131,10 +139,9 @@ def open_answer(id, step):
     if auth == None:
         return redirect('/')
     if answer == 'True':
-        data = {"user": auth, "id": id, "step": step, "answer": answer}
+        data = {"email": auth['email'], "id": id, "task_num": int(f'{id}0{step}'), 'stars': 1}
         req = requests.post('http://127.0.0.1:5000/api/v1/task/done_task', json=data)
-        if req.status_code == 200:
-            pass
+        print(req.json())
     l, text_q, quest_q, code_q = get_lessons(id)
     return render_template('lesson.html', user=auth, l=l, step=step, is_true=answer, text=text_q, quest=quest_q, code_q=code_q)
 
@@ -186,8 +193,8 @@ def open_code(id, step):
                             description = 'Частично пройдено. Результат не засчитан.'
                         elif counter == len(i_data):
                             description = 'Пройдено.'
-                            data = {"user": auth, "id": id, "step": step, "code": answer, "input": i_data, "output": o_data}
-                            req = requests.post('http://127.0.0.1:5000/api/v1/task/code_task', json=data)
+                            data = {"email": auth['email'], "id": id, "task_num": int(f'{id}0{step}'), 'stars': 2, "code": answer}
+                            req = requests.post('http://127.0.0.1:5000/api/v1/task/done_task', json=data)
                             if req.status_code == 200:
                                 pass
                     text_q = []

@@ -73,10 +73,14 @@
                 <div class="card-body">
                     <h5 class="card-title">Рейтинг</h5>
                     <p class="card-text">
-                        Твоя позиция - {{ user.rating }}! Не сдавайся, все будет!
+                        {% for j in users.raiting %}
+                            {% if j.name == user.name %}
+                                Твоя позиция - {{ loop.index }}! Не сдавайся, все будет!
+                            {% endif %}
+                        {% endfor %}
                     </p>
                     <ol class="list-group list-group-numbered  mt-3">
-                        {% for u in users %}
+                        {% for u in users.raiting %}
                             <li class="list-group-item d-flex justify-content-between align-items-start">
                                 <div class="ms-2 me-auto">
                                     <div class="fw-bold">
