@@ -6,6 +6,24 @@ import os
 from datetime import date
 
 
+def check_all_class(data):
+    try:
+        conn = sqlite3.connect('ItPying_users.db')
+        cursor = conn.cursor()
+
+        cursor.execute("""SELECT DISTINCT class FROM users WHERE teacher = ? ORDER BY class""", (data['teacher'],))
+        unique_classes = [row[0] for row in cursor.fetchall()]
+        conn.close()
+        return {
+            "http_code": 200,
+            "classes": unique_classes,
+        }
+    except Exception as e:
+        return {
+            "http_code": 404,
+            "message": "Произошла критическая ошибка",
+            "details": str(e)
+        }
 def auth(data):
     try:
         email = data['email']
@@ -136,9 +154,10 @@ def add_user(data):
 def delete_user(data):
     try:
         email = data.get('email')
+        print(email)
 
         if not email:
-            return {"http_code": 400, "message": "Необходимо указать ID или email пользователя."}
+            return {"http_code": 400, "message": "Необходимо указать email пользователя."}
 
         conn = sqlite3.connect('ItPying_users.db')
         cursor = conn.cursor()

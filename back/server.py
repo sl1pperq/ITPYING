@@ -35,8 +35,12 @@ def post_done_task():
 def post_test_info():
     return check_test(request.json)
 
-@app.route('/api/v1/task/delete_user', methods=['POST'])
+@app.route('/api/v1/user/delete_user', methods=['POST'])
 def post_delete_user():
     return delete_user(request.json)
+
+@app.route('/api/v1/info/check_all_class', methods=['POST'])
+def post_check_all_class():
+    return check_all_class(request.json)
 
 app.run()
